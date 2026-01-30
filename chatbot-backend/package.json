@@ -1,10 +1,14 @@
 {
   "scripts": {
-    "dev": "nodemon --exec \"ts-node ./src/index.ts\"",
+    "dev": "nodemon --exec ts-node ./src/index.ts",
     "build": "tsc",
-    "start": "node ./dist"
+    "start": "node ./dist",
+    "chroma-server": "chroma run",
+    "ingestTest": "nodemon --exec \"ts-node ./src/context/ingester.ts\""
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
@@ -15,6 +19,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@chroma-core/default-embed": "^0.1.9",
     "@langchain/google-genai": "^2.1.7",
     "acorn": "^8.15.0",
     "acorn-walk": "^8.3.4",
@@ -25,11 +30,14 @@
     "brace-expansion": "^1.1.12",
     "braces": "^3.0.3",
     "chokidar": "^3.6.0",
+    "chromadb": "^3.2.2",
     "concat-map": "^0.0.1",
+    "cors": "^2.8.5",
     "create-require": "^1.1.1",
     "debug": "^4.4.3",
     "diff": "^4.0.2",
     "dotenv": "^17.2.3",
+    "express": "^5.2.1",
     "fill-range": "^7.1.1",
     "glob-parent": "^5.1.2",
     "has-flag": "^3.0.0",
