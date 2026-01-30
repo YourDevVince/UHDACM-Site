@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -6,8 +6,23 @@ const pe = process.env;
 
 const env_vars = {
   PORT: Number(pe.PORT!),
-} as const;
+  AI_MODEL: pe.GEMINI_CHAT_MODEL!,
+  AI_APIKEYS: (() => {
+    const RAW_KEYS: string = pe.GOOGLE_API_KEYS!;
 
+    const API_KEYS: string[] = RAW_KEYS.split(',')
+      .map((key) => key.trim())
+      .filter((key): key is string => Boolean(key));
+
+    if (API_KEYS.length === 0) {
+      throw new Error(
+        'No API keys found. Set GOOGLE_API_KEYS=key1,key2,... (or GOOGLE_API_KEY).',
+      );
+    }
+    return API_KEYS;
+  })(),
+  CHROMA_DB_PORT: Number(pe.CHROMA_DB_PORT),
+} as const;
 
 for (const [key, val] of Object.entries(env_vars)) {
   if (val == undefined) {
@@ -16,6 +31,8 @@ for (const [key, val] of Object.entries(env_vars)) {
 }
 
 if (isNaN(env_vars.PORT)) {
+  throw new Error(`env_vars PORT is NaN`);
+} else if (isNaN(env_vars.CHROMA_DB_PORT)) {
   throw new Error(`env_vars PORT is NaN`);
 }
 
