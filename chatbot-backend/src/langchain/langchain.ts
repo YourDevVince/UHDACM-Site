@@ -85,7 +85,7 @@ export async function handleQuestion(question: string): Promise<string> {
       advanceKey();
     }
   }
-  throw lastErr instanceof Error
-    ? lastErr
-    : new Error(`All API keys failed. Last error: ${getErrorMessage(lastErr)}`);
+  throw new Error(
+    `All API keys failed. Last error: ${getErrorMessage(lastErr)}`,
+  );
 }

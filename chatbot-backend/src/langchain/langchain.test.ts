@@ -92,9 +92,13 @@ describe('handleQuestion', () => {
 
     invokeMock
       .mockRejectedValueOnce(new Error('quota exceeded'))
+      .mockRejectedValueOnce(new Error('rate limit'))
       .mockRejectedValueOnce(new Error('rate limit'));
 
     await expect(handleQuestion('hi')).rejects.toThrow(/All API keys failed/i);
-    expect(createdOpts).toHaveLength(2);
+    expect(createdOpts).toHaveLength(3);
+    expect(createdOpts[0].apiKey).toBe('KEY_1');
+    expect(createdOpts[1].apiKey).toBe('KEY_2');
+    expect(createdOpts[2].apiKey).toBe('KEY_3');
   });
 });
