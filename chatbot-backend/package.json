@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
+    "test": "vitest",
     "contextTest": "nodemon --exec ts-node -r tsconfig-paths/register ./src/context/contextTest.ts",
     "queryTest": "nodemon --exec ts-node -r tsconfig-paths/register ./src/query/queryTest.ts",
     "build": "tsc",
@@ -63,6 +64,7 @@
     "undefsafe": "^2.0.5",
     "undici-types": "^7.16.0",
     "v8-compile-cache-lib": "^3.0.1",
+    "vitest": "^4.0.18",
     "yn": "^3.1.1"
   },
   "keywords": [],
