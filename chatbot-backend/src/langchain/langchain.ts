@@ -22,7 +22,7 @@ function advanceKey(): string {
 
 function getErrorMessage(err: unknown): string {
   if (err instanceof Error) return err.message;
-  if (typeof err === 'string') return err;
+  if (typeof err === "string") return err;
   try {
     return JSON.stringify(err);
   } catch {
@@ -62,7 +62,7 @@ function shouldRotateKey(err: unknown): boolean {
 export async function handleQuestion(question: string): Promise<string> {
   let lastErr: unknown = null;
 
-  console.log('working on it');
+  console.log("working on it");
   for (let attempt = 0; attempt < API_KEYS.length; attempt++) {
     const apiKey = getCurrentKey();
     try {
@@ -71,15 +71,18 @@ export async function handleQuestion(question: string): Promise<string> {
         model: modelName,
         apiKey,
       });
-      console.log('attempt', attempt);
+      console.log("attempt", attempt);
       const response = await model.invoke(question);
-      console.log('finished', attempt);
-      return typeof response.content === 'string'
+      console.log("finished", attempt);
+      return typeof response.content === "string"
         ? response.content
         : JSON.stringify(response.content);
     } catch (err: unknown) {
       lastErr = err;
       if (!shouldRotateKey(err)) {
+        await LogMessage((err as Error).message, {
+          function: 'handleQuestion'
+        })
         throw err instanceof Error ? err : new Error(getErrorMessage(err));
       }
       advanceKey();

@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "node ./dist",
     "chroma-server": "chroma run",
-    "ingestTest": "nodemon --exec ts-node -r tsconfig-paths/register ./src/context/ingester.ts"
+    "ingestTest": "nodemon --exec ts-node -r tsconfig-paths/register ./src/context/ingester.ts",
+    "test": "vitest log.test.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
